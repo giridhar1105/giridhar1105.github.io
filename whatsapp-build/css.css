@@ -1,0 +1,62 @@
+*{
+    margin: 0;
+}
+body{
+    font-family: 'Roboto',sans-serif;
+}
+.sidepannel{
+    height: 100vh;
+    width: 50px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.box-icons{
+    font-size: 25px;
+    color: white;
+    margin-top: 100px;
+    cursor: pointer;
+}
+.box-icons :hover{
+    font-size: larger;
+}
+.toppannel{
+    margin-top: 0;
+    height: 50px;
+    width: 100vw;
+    background-color: rgb(54, 97, 54);
+    display: flex;
+    font-size: 25px;
+    align-items: center;
+}
+.toppannel :hover{
+    font-size: large;
+    opacity: 0.8;
+}
+.topside{
+    margin-left: 250px;
+    display: flex;
+    cursor: pointer;
+    color: white;
+    justify-content: space-evenly;
+}
+.top-icons{
+    margin-left: 100px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+}
+.top-icons :hover{
+    font-size: 35px;
+}
+.top-icons-text{
+    font-size: 30px;
+    color: white;
+    margin-left: 25px;
+}
+.rightpannel{
+    background-color: rgba(0, 0, 0, 0.738);
+    height: calc(100vh - 50px);
+}

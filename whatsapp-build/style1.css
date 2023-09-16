@@ -1,0 +1,12 @@
+.lp{
+    flex-basis: 440px;
+    background-color: blueviolet;
+}
+.lp header{
+    flex-basis: 90px;
+    background-color: white;
+    display: flex;
+}
+.rp{
+    
+}

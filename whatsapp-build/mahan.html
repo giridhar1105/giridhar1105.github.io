@@ -1,0 +1,38 @@
+HTML: 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yt-Build</title>
+    <link rel="stylesheet" href="./mahan.css" />
+</head>
+<body>
+    <div id="root" class="root">
+        <div class="video-cont">
+            <div class="video-place">
+                <img src="https://img.youtube.com/vi/dug56u8NN7g/maxresdefault.jpg" />
+                <div>2:26</div>
+            </div>
+            <div class="video-details">
+                <div class="video-header">
+                    <img src="https://yt3.ggpht.com/fGvQjp1vAT1R4bAKTFLaSbdsfdYFDwAzVjeRVQeikH22bvHWsGULZdwIkpZXktcXZc5gFJuA3w=s68-c-k-c0x00ffffff-no-rj" />
+                    <h3>Marvel Studios’ Loki Season 2 | Official Trailer | Disney+</h3>
+                </div>
+                <div class="video-footer">
+                    <p>Marvel Entertainment</p>
+                    <p>2.1M views <span>⚪</span> 3 hours ago</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let content = "";
+        for (let index = 0; index < 20; index++) {
+            content = content + document.getElementById('root').innerHTML;
+        }
+        console.log(content)
+        document.getElementById('root').innerHTML = content;
+    </script>
+</body>
+</html>

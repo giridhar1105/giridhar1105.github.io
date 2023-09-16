@@ -1,0 +1,53 @@
+*{
+    margin: 0;
+    padding: 0;
+    background-color: black;
+}
+.body{
+    margin: 0;
+}
+.topbar{
+    margin-top: 0;
+    width: 100vw;
+    height: 50px;
+    background-color: blue;
+}
+.con{
+    font-size: 30px;
+}
+.Renu{
+    margin: 50px;
+    width: 800px;
+    height: 800px;
+    cursor: pointer;
+}
+.Renu :hover{
+    font-size: larger;
+}
+.Renuu{
+    margin: 50px;
+    width: 800px;
+    height: 800px;
+    cursor: pointer;
+}
+.Renuu :hover{
+    font-size: larger;
+}
+.Renuuu{
+    margin: 50px;
+    width: 800px;
+    height: 800px;
+    cursor: pointer;
+}
+.Renuuu :hover{
+    font-size: larger;
+}
+.Renuuuu{
+    margin: 50px;
+    width: 800px;
+    height: 800px;
+    cursor: pointer;
+}
+.Renuuuu :hover{
+    font-size: larger;
+}
