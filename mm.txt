@@ -1,0 +1,1161 @@
+
+
+PROGRAM 1
+
+Create a table called Employee & execute the following.
+Employee (EMPNO, ENAME, JOB, MANAGER_NO, SAL, COMMISSION)
+    1. Create a user and grant all permissions to the user.
+    2. Insert the any three records in the employee table contains attributes EMPNO, ENAME JOB, MANAGER_NO, SAL, COMMISSION and use rollback. Check the result.
+    3. Add primary key constraint and not null constraint to the employee table.
+        4.Insert null values to the employee table and verify the result.
+
+1.Create a user and grant all permissions to the user.
+Sql> create user <username> identified by <password>;
+Sql> grant resource, connect to <username>;
+Sql> grant all privileges to username identified by password;
+Sql> select privilege from dba_sys_privs 
+        where grantee='username' 
+        order by 1;
+
+Sql> connect <username> / <password>;
+
+Sql>create table employee1 
+       (
+        empno number(5),
+        ename varchar2(10),
+         job varchar2(10),
+         manager_no number(5),
+         sal number(10, 2),
+         commission number(10, 2));
+
+Sql> desc employee1; 
+
+
+2. Insertion of Values to Tables
+
+sql> insert into employee1 values(1, 'john', 'manager', null, 5000, 1000);
+sql> insert into employee1 values(2, 'smith', 'developer', 1, 4000, null);
+sql> insert into employee1 values(3, 'decock', 'ceo', null, 5000, 1000);
+
+Sql> select * from employee1;
+
+
+
+Sql> delete from employee1;
+Sql> select * from employee1;
+Sql> rollback;
+
+
+Sql> select * from employee1;
+
+
+
+Again u have to insert records to employee1
+
+sql> insert into employee1 values(1, 'john', 'manager', null, 5000, 1000);
+sql> insert into employee1 values(2, 'smith', 'developer', 1, 4000, null);
+sql> insert into employee1 values(1, 'decock', 'ceo', null, 5000, 1000);
+
+sql> select * from employee1;
+
+sql> commit;
+
+Sql> delete from employee1;
+
+Sql> select * from employee1;
+
+Sql> rollback;
+
+
+Sql> select * from employee1;
+
+3)Add primary key constraint and not null constraint to the employee table.
+
+Sql>ALTER TABLE Employee1 ADD CONSTRAINT pk_employee1 PRIMARY KEY (empno);
+
+
+
+4) Add NOT NULL constraint to ENAME, JOB, and SAL columns
+
+Sql>alter table employee1
+        modify (ename varchar2(10) not null,
+        job varchar2(10) not null,
+        sal number(10, 2) not null);
+
+Sql>Desc employee1;
+
+
+
+
+5) Insert null values to the employee table and verify the result.
+
+INSERT INTO Employee1 VALUES (4, NULL, 'Tester', 1, NULL, NULL);
+
+PROGRAM 2
+
+
+Create a table called Employee that contain attributes EMPNO, ENAME, JOB, MGR, SAL & execute the following.
+    1. Add a column commission with domain to the Employee table.
+    2. Insert any five records into the table.
+    3. Update the column details of job
+    4. Rename the column of Employ table using alter command.
+    5. Delete the employee whose Empno is 105.
+
+
+
+Create a table called Employee that contain attributes EMPNO, ENAME, JOB, MGR, SAL
+  Sql> create table employee2 (
+          empno int primary key,
+          ename varchar(10),
+          job varchar(10),
+         mgr int,
+         sal decimal(10, 2)
+         );
+
+ Sql> desc employee2;
+
+    1. Adding a column commission to the Employee table
+sql>alter table employee2 add commission decimal(10, 2);
+
+
+
+Sql> desc employee2;
+
+
+
+    2. Insert any five records into the table. 
+
+Sql> insert into employee2 values  (101, 'John Doe', 'Manager', 111, 50000.00, 1000.00);
+Sql> insert into employee2 values   (102, 'Jane Smith', 'Developer', 222, 40000.00, 1800.50);
+Sql> insert into employee2 values  (103, 'Mike John', 'Analyst', 333, 35000.50, 1700.00);  
+Sql> insert into employee2 values  (104, 'Emily Bown', 'Designer',444, 38000.00, 1750.80);   
+Sql> insert into employee2 values  (105, 'David Lee', 'Tester', 555, 32000.00, 1600.60);
+
+Sql> select * from employee2;
+
+
+
+
+3. Updating the column details of job
+-- For example, changing 'Manager' to 'Project Manager'
+
+Sql> alter table employee2 modify job varchar(15);
+ 
+
+Sql> update employee2
+        set job = 'project manager'
+        where mgr = 111;
+
+Sql> select * from employee2;
+
+
+
+
+    3. Renaming the column of Employee table using ALTER command
+
+Sql> alter table employee2
+         rename column mgr to manager_id;
+
+sql> desc employee2;
+
+
+
+Sql> select * from employee2;
+
+
+
+    4. Deleting the employee whose Empno is 105
+Sql> delete from employee2
+         where empno = 105;
+
+Sql> select * from employee2;
+
+
+
+PROGRAM 3
+
+Queries using aggregate functions (COUNT,AVG,MIN,MAX,SUM),Group by,Orderby. 
+Employee(E_id, E_name, Age, Salary)
+
+    1. Create Employee table containing all Records E_id, E_name, Age, Salary.
+    2. Count number of employee names from employeetable
+    3. Find the Maximum age from employee table.
+    4. Find the Minimum age from employeetable.
+    5. Find salaries of employee in Ascending Order.
+    6. Find grouped salaries of employees.
+
+Q1.  Create an Employee3 table containing all Records E_id, E_name, Age, Salary.
+
+Sql> create table employee3 (
+        e_id int primary key,
+        e_name varchar(10),
+        age int,
+        salary decimal(10, 2)
+        );
+
+Sql> desc employee3;
+
+
+
+sql> insert into employee3 values(101,’ramkumar’,32,45000);
+sql> insert into employee3 values(102,’ajay’,30,30000);
+sql> insert into employee3 values(103,’srajan’,35,70000);
+sql> insert into employee3 values(104,’stany’,340,60000);
+
+
+sql> insert into employee3 values(105,’aramn’,32,40000);
+
+sql> select * from employee3;
+
+
+
+Q2. Count number of employee names from employee table
+
+sql>select count(e_name) as totalemployees from employee3;
+
+
+
+Q3. Find the maximum age from employee table.
+
+sql> select max(age) as maxage from employee3;
+
+
+
+Q4. Find the minimum age from employeetable.
+
+sql>select min(age) as minage from employee3;
+
+
+
+Q5. Find salaries of employee in ascending order.
+sql> select salary from employee3 order by salary asc;
+
+
+
+Q6. Find grouped salaries of employees
+
+sql>select salary, count(*) as numemployees from employee3 group by salary;
+
+
+
+
+
+sql>select e_name, age, age + 5 as ageafter5years from employee3;
+
+
+
+
+
+sql> select e_name, salary, salary * 0.1 as salaryincrease from employee3;
+
+
+
+sql> select avg(salary) as averagesalary from employee3;
+
+PROGRAM 4
+
+
+Create a row level trigger for the customers table that would fire for INSERT or UPDATE or DELETE operations performed on the CUSTOMERS table. This trigger will display the salary difference between the old & new Salary.
+CUSTOMERS(ID,NAME,AGE,ADDRESS,SALARY)
+
+Q1.Create the CUSTOMERS table
+
+Sql> Create table customers (
+         id int primary key,
+         name varchar(10),
+         Age int,
+         Address varchar(15),
+         Salary decimal(10,2)
+         );
+
+Sql> desc customers;
+
+
+
+Sql> insert into customers values(101,’smith’,32,’capgemini’,55000);
+Sql> insert into customers values(102,’smitharani’,30,’capgemini’,45000);
+Sql> insert into customers values(103,’smitharani’,30,’capgemini’,45000);
+Sql> insert into customers values(104,’kamelesh’,32,’capgemini’,55000);
+Sql> insert into customers values(105,’amith’,40,’capgemini’,65000);
+
+
+Sql> select * from customers;
+
+
+Create the trigger
+
+sql >create or replace trigger salary_difference_trigger
+before insert or update or delete on customers
+for each row
+declare
+    old_salary number;
+    new_salary number;
+begin
+    if inserting or updating then
+        old_salary := nvl(:old.salary, 0);
+        new_salary := nvl(:new.salary, 0);
+        dbms_output.put_line('salary difference: ' || (new_salary - old_salary));
+    elsif deleting then
+        old_salary := nvl(:old.salary, 0);
+        dbms_output.put_line('salary before deletion: ' || old_salary);
+    end if;
+end;
+/
+
+
+b) create or replace trigger salary_difference_trigger
+after insert or update or delete on customers
+for each row
+declare
+old_salary customers.salary%type;
+new_salary customers.salary%type;
+    difference number;
+begin
+    if inserting then
+        dbms_output.put_line('new record inserted.');
+        dbms_output.put_line('id: ' || :new.id || ', name: ' || :new.name || ', age: ' || :new.age || ', address: ' || :new.address || ', salary: ' || :new.salary);
+    elsif updating then
+old_salary := :old.salary;
+new_salary := :new.salary;
+difference := new_salary - old_salary;
+        dbms_output.put_line('salary updated for id: ' || :new.id || '. old salary: ' || old_salary || ', new salary: ' || new_salary || ', salary difference: ' || difference);
+    elsif deleting then
+        dbms_output.put_line('record deleted for id: ' || :old.id || ', name: ' || :old.name || ', age: ' || :old.age || ', address: ' || :old.address || ', salary: ' || :old.salary);
+
+    end if;
+end;
+/
+
+
+
+Sql>set serveroutput on;
+//Enable serveroutput for executing at dbms_output.put_line//
+
+Sql> insert into customers values(106,’arun’,40,’capgemini’,85000);
+
+
+sql>update customers set salary=85000 where id=101;
+
+
+sql> delete from customers where id=104;
+
+
+
+PROGRAM 5
+
+Create cursor for Employee table & extract the values from the table. Declare the variables
+Open the cursor & extract the values from the cursor. Close the cursor.
+Employee (E_id, E_name, Age, Salary)
+
+Q1.  Create an Employee3 table containing all Records E_id, E_name, Age, Salary.
+
+Sql> create table employee5 (
+e_id int primary key,
+e_name varchar(10),
+age int,
+salary decimal(10, 2)
+);
+
+sql> desc employee5;
+
+
+
+sql> insert into employee5 values(101,’ramkumar’,32,45000);
+sql> insert into employee5 values(102,’ajay’,30,30000);
+sql> insert into employee5 values(103,’srajan’,35,70000);
+sql> insert into employee5 values(104,’stany’,34,60000);
+sql> insert into employee5 values(105,’stany’,34,60000);
+
+sql>commit;
+
+sql> select * from employee5;
+
+
+
+
+Q2. Declare the variables Open the cursor & extract the values from the cursor. Close the cursor.
+
+
+sql> declare
+    e_id employee5.e_id%type;
+    e_name employee5.e_name%type;
+    age employee5.age%type;
+    salary employee5.salary%type;
+
+-- declare cursor
+cursor employee5_cursor is
+    select e_id, e_name, age, salary
+    from employee5;
+
+-- open the cursor
+begin
+    open employee5_cursor;
+
+    -- fetch data from cursor
+    loop
+        fetch employee5_cursor into e_id, e_name, age, salary;
+        exit when employee5_cursor%notfound;
+        -- output or use the fetched values
+        dbms_output.put_line('employee id: ' || e_id || ', name: ' || e_name || ', age: ' || age || ', salary: ' || salary);
+    end loop;
+
+    -- close the cursor
+    close employee5_cursor;
+end;
+/
+
+
+PROGRAM 6
+
+Write a PL/SQL block of code using parameterized Cursor, that will merge the data available in the newly created table N_RollCall with the data available in the table O_RollCall. If the data in the first table already exist in the second table then that data should be skipped.
+
+Create table N_RollCall & O_ RollCall (id,name,roll)
+
+Sql> create table N_RollCall(
+          id int ,
+          name varchar(10),
+          roll int
+          );
+
+Sql> desc N_RollCall;
+
+
+
+SQL> create table O_RollCall(
+           id int ,
+          name varchar(10),
+          roll int
+          );
+
+Sql> desc O_RollCall;
+
+
+
+Sql> insert into N_RollCall  values (1121, 'satya12333',  111111111);
+Sql> insert into N_RollCall  values (1121, 'satya12333',  111111111);
+Sql> insert into N_RollCall  values (1121, 'satya12333',  111111111);
+Sql> insert into N_RollCall  values (1121, 'satya12333',  111111111);
+Sql> insert into N_RollCall  values (1122, 'satya12333',  111111111);
+
+Sql> select * from N_RollCall;
+
+
+
+declare
+    v_count number;
+    cursor c_new_rollcall is
+        select id, name, roll
+        from n_rollcall;
+begin
+    for new_rec in c_new_rollcall loop
+        -- check if the record already exists in o_rollcall
+        select count(*)
+        into   v_count
+        from   o_rollcall
+        where  id = new_rec.id;
+
+        -- if record doesn't exist, insert it
+        if v_count = 0 then
+            insert into o_rollcall (id, name, roll)
+            values (new_rec.id, new_rec.name, new_rec.roll);
+            dbms_output.put_line('record inserted: ' || new_rec.id);
+        else
+
+            dbms_output.put_line('record skipped: ' || new_rec.id);
+        end if;
+    end loop;
+    commit;
+end;
+/
+
+
+
+
+
+
+SQL> select * from N_RollCall;
+
+
+
+SQL> select * from O_RollCall;
+
+
+
+Sql> commit;
+
+
+PROGRAM 7 
+MONGO DB
+
+
+Question 7
+Install an Open Source NoSQL Data base MongoDB & perform basic CRUD(Create, Read, Update & Delete) operations. Execute MongoDB basic Queries using CRUD operations.
+Solution
+1. Installing Open Source NoSQL Data base MongoDB
+Please refer to the blog below which contains detailed procedure of installing Open Source 
+NoSQL Data base MongoDB.
+Installation steps for mangodb in ubuntu: 
+
+Press alt+ctrl+t (To open Terminal)
+Line by line
+sudo apt-get update 
+wget -q0 -https://www.mongodb.org/static/pgp/server-4.0.asc | sudo apt-key add -
+sudo apt-get install  curl
+sudo apt-get install gnupg curl
+
+curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc |    sudo gpg -o /usr/share/keyrings/mongodb-server-4.4.gpg    --dearmor
+echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-4.4.gpg ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+
+clear
+sudo apt-get update
+
+sudo apt-get install -y mongodb-org=4.4.29 mongodb-org-server=4.4.29 mongodb-org-shell=4.4.29 mongodb-org-mongos=4.4.29 mongodb-org-tools=4.4.29
+ps --no-headers -o comm 1
+
+Clear
+
+2. Perform basic CRUD(Create, Read, Update & Delete) operations.
+1. Start MongoDB.
+Launch the MongoDB daemon using the following command:
+sudo service mongodb start
+2. Start the MongoDB Shell
+Launch the MongoDB shell to perform basic CRUD operations.
+
+Mongo:
+To create user
+3. Switch to a Database (Optional):
+If you want to use a specific database, switch to that database using the use command. If the database doesn’t exist, MongoDB will create it implicitly when you insert data into it:
+
+
+
+Create a table
+4.Create the ProgrammingBooks Collection:
+To create the ProgrammingBooks collection, use the createCollection() method. This step is optional because MongoDB will automatically create the collection when you insert data into it, but you can explicitly create it if needed:
+
+
+This command will create an empty ProgrammingBooks collection in the current database cse
+
+ 5. INSERT operations
+a. Insert 5 Documents into the ProgrammingBooks Collection :
+
+Now, insert 5 documents representing programming books into the ProgrammingBooks collection using the insertMany() method:
+
+
+
+
+6. Read (Query) Operations
+a. Find All Documents
+To retrieve all documents from the ProgrammingBooks collection:
+
+
+
+
+
+
+
+Find Documents Matching a Condition
+To find books published after the year 2000:
+
+
+
+7. Update Operations
+a. Update a Single Document
+To update a specific book (e.g., change the author of a book):
+
+
+b. Update Multiple Documents
+To update multiple books (e.g., update the category of books published before 2010):
+
+
+
+
+
+
+
+8. Delete Operations
+a. Delete a Single Document
+To delete a specific book from the collection (e.g., delete a book by title):
+
+b. Delete Multiple Documents
+To delete multiple books based on a condition (e.g., delete all books published before 1995):
+
+
+
+
+
+
+
+
+c. Delete All Documents in the Collection:
+To delete all documents in a collection (e.g., ProgrammingBooks), use the deleteMany() method with an empty filter {}:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ADDITIONAL PROGRAMS
+
+    1) Consider the following relations:
+Student (snum: integer, sname: string, major: string, level: string, age: integer)
+Class (name: string, meets at: string, room: string, d: integer)
+Enrolled (snum: integer, cname: string)
+Faculty (fid: integer, fname: string, deptid: integer)
+The meaning of these relations is straightforward; for example, Enrolled has one record per student-class pair such that the student is enrolled in the class. Level is a two character code with 4 different values (example: Junior: JR etc.)
+Write the following queries in SQL. No duplicates should be printed in any of the answers.
+        i. Find the names of all Juniors (level = JR) who are enrolled in a class taught by Prof. Harshith
+        ii. Find the names of all classes that either meet in room R128 or have five or more Students enrolled.
+        iii. Find the names of all students who are enrolled in two classes that meet at the same time.
+        iv. Find the names of faculty members who teach in every room in which some class is taught.
+        v. Find the names of faculty members for whom the combined enrollment of the courses that they teach is less than five.
+SCHEMA DIAGRAM
+
+
+
+
+
+Create the above tables by properly specifying the primary keys and foreign keys.
+Enter at least five tuples for each relation.
+SQL>create table student(
+       snum integer,
+	       sname varchar(10),
+	       major varchar(10),
+	       levels varchar(2),
+	       age number(2),
+	       primary key(snum));
+Table created.
+
+sql>insert into student values('&snum','&sname','&major','&levels','&age');
+sql> select * from student;
+SNUM
+SNAME
+MAJOR
+LEVELS
+AGE
+101
+LIKI
+MATHS
+JR
+21
+102
+LAVI
+MATHS
+SR
+22
+103
+GOPI
+SE
+SR
+27
+104
+CHANDU
+OR
+JR
+20
+105
+LAHI
+SE
+SR
+27
+5 rows selected.
+
+sql>create table faculty (
+      fid number(5),
+      fname varchar(10),
+      deptid number(5),
+      primary key(fid));
+table created.
+
+sql> insert into faculty values(&fid,'&fname','&depid');
+sql> select * from faculty;
+
+
+
+
+
+
+FID
+FNAME
+DEPID
+501
+HARSHITH
+401
+502
+SATHYA
+402
+503
+RAMYA
+401
+504
+SRINATH
+405
+505
+LAHARI
+403
+506
+ASHA
+404
+507
+USHA
+402
+
+
+7 rows selected.
+
+
+sql> create table class
+       (
+	cname varchar(20),
+	meetsat varchar(10),
+	room varchar(5),
+	fid number(5),
+         primary key(cname),
+	foreign key(fid)references faculty(fid)
+       );
+           table created.
+
+sql>insert into class values('&cname','&meetsat','&room','&fid');
+sql>select * from class;
+
+CNAME
+MEETSAT
+ROOM
+FID
+3A
+10.00
+R128
+501
+3B
+10.00
+R02
+502
+4A
+11.00
+R03
+503
+4B
+11.00
+R128
+502
+5A
+12.00
+R04
+504
+5B
+11.00
+R128
+501
+6A
+10.00
+R02
+501
+6B
+12.00
+R03
+501
+7A
+10.00
+R04
+501
+9 rows selected.
+
+
+
+sql> create table enrolled
+        (
+        snum integer,
+       cname varchar(20),
+       foreign key(cname) references class(cname),
+       foreign key(snum) references student(snum)
+       );
+      table created.
+
+sql> insert into enrolled values(&snum,'&cname');
+sql> select * from enrolled;
+
+SNUM
+CNAME
+101
+3A
+101
+3B
+101
+4A
+101
+4B
+101
+5A
+101
+5B
+101
+6A
+101
+6B
+102
+3A
+102
+3B
+103
+3A
+104
+4A
+105
+5A
+101
+5B
+103
+4B
+105
+3A
+104
+3A
+
+17 rows selected.
+
+sql>select distinct sname
+       from student s,enrolled e,class c,faculty f
+       where s.snum=e.snum and e.cname=c.cname and 
+       c.fid=f.fid and        
+       fname='harshith' and levels='jr';
+
+
+
+
+SNAME
+CHANDU
+LIKI
+
+sql>select distinct c.cname
+      from class c,enrolled e
+     where c.cname=e.cname and room='r128' or c.cname in	
+     (select cname from enrolled group by cname having count(snum)>=5);
+
+
+
+
+
+
+
+    i. 
+sql> select distinct s.sname
+	       from student s where s.snum in
+	       (select e1.snum from enrolled e1,enrolled e2,class c1,class c2
+                   where e1.cname=c1.cname and e2.cname=c2.cname and
+                   e1.snum=e2.snum and
+                   e1.cname<>c2.cname and c1.meetsat=c2.meetsat);	
+
+SNAME
+LAVI
+LIKI
+
+    ii. 
+sql>  select f.fname
+         from faculty f
+         where not exists((select c.room from class c)
+         minus (select c1.room from class c1 where c1.fid=f.fid));
+
+
+
+
+FNAME
+HARSHITH
+V.
+sql> select distinct f.fname
+                    from faculty f
+	        where 5>(select count(e.snum)
+	        from class c,enrolled e
+	        where c.cname=e.cname and f.fid=c.fid);
+
+FNAME
+AHSA
+LAHARI
+RAMYA
+SATHYA
+SRINATH
+USHA
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    2) The following relations keep track of airline flight information:
+Flights (no: integer, from: string, to: string, distance: integer, Departs: time, arrives: time, price: real)
+Aircraft (aid: integer, aname: string, cruisingrange: integer)
+Certified (eid: integer, aid: integer)
+Employees (eid: integer, ename: string, salary: integer)
+
+Note that the Employees relation describes pilots and other kinds of employees as well; every pilot is certified for some aircraft, and only pilots are certified to fly. 
+Write each of the following queries in SQL. 
+        i. Find the names of aircraft such that all pilots certified to operate them have salaries more than Rs.80,000.
+        ii. For each pilot who is certified for more than three aircrafts, find the eidand the maximum cruisingrange of the aircraft for which she or he is certified.
+        iii. Find the names of pilots whose salary is less than the price of the cheapest route from Bengaluru to Frankfurt.
+        iv. For all aircraft with cruisingrange over 1000 Kms. Find the name of the aircraft and the average salary of all pilots certified for this aircraft.
+        v. Find the names of pilots certified for some Boeing aircraft.
+        vi. Find the aids of all aircraft that can be used on routes from Bengaluru to New Delhi.
+SCHEMA DIAGRAM
+
+
+Create the above tables by properly specifying the primary keys and foreign keys.Enter at least five tuples for each relation.
+sql>create table flight(
+      no integer,
+      frm varchar(20),
+      end varchar(20),
+      dist integer,
+      dept date,
+      arr date,
+      price real,
+     primary key(no));
+table created.
+
+sql> insert into flight values('&no','&frm','&end','&dist',’&dept','&arr','&price');
+sql> select * from flight;
+NO
+FRM
+END
+DIST
+DEPT
+ARR
+PRICE
+255
+BANGALORE
+FRANKFURT
+200
+01-AUG-11
+01-AUG-11
+5000
+256
+BANGALORE
+FRANKFURT
+200
+01-AUG-11
+01-AUG-11
+8000
+257
+BANGALORE
+DELHI
+200
+01-AUG-11
+01-AUG-11
+5000
+258
+BANGALORE
+DELHI
+200
+01-AUG-11
+01-AUG-11
+6000
+259
+BANGALORE
+MANGALORE
+200
+01-AUG-11
+01-AUG-11
+8000
+
+sql> create table aircraft (
+        aid int,
+        aname varchar(15),
+        crange integer,
+        primary key(aid));
+        table created
+
+sql>insert into aircraft values('&aid','&aname','&crange');
+sql>select * from aircraft;
+	
+
+
+
+AID
+ANAME
+CRANGE
+685
+BOEING15
+1000
+686
+BOEING10               
+2000
+687
+SKYTRAIN
+1000
+688
+AVENGER
+100
+4 rows selected.
+sql> create table employees
+        (eid int,
+        ename varchar(15),
+        salary real,
+        primary key(eid));
+       table created.
+
+sql> insert into employees values('&eid','&ename','&salary');
+sql> select * from employees;
+
+EID
+ENAME
+SALARY
+101
+ASHA
+90000
+102
+ARUN
+85000
+103
+ANAND
+3000
+104
+RAMYA
+40000
+	
+4 rows selected.
+sql> create table certified(
+        eid int,
+        aid int,
+        primary key(eid,aid));
+        table created.
+
+sql> insert into certified values('&eid','&aid');
+sql> select * from certified;
+
+
+
+EID
+AID
+101
+685
+101
+686
+101
+687
+101
+688
+102
+685
+103
+686
+103
+687
+   7 rows selected.
+    i. Find the names of aircraft such that all pilots certified to operate them have salaries more than Rs.80, 000.
+
+SQL>select distinct a.aname 
+from aircraft a,certified c,employees e 
+where c.eid=e.eid and 
+a.aid=c.aid and 
+salary in(select 
+salary from employees 
+where salary>80000);
+
+ANAME
+AVENGER
+BOEING10
+BOEING15
+SKYTRAIN
+
+
+    ii) For each pilot who is certified for more than three aircrafts, find the eid and the maximum cruisingrange of the aircraft for which she or he is certified.
+
+sql> select c.eid,max(a.crange)
+	        from certified c,aircraft a
+	        where c.aid=a.aid group by c.eid having count(c.aid)>3;
+
+EID
+MAX(A.CRANGE)
+101
+2000
+
+    iii) Find the names of pilots whose salary is less than the price of the cheapest route from Bengaluru to Frankfurt.
+
+SQL> select e.ename
+from employees e
+where e.salary<(select min(price)
+from flight where frm='bangalore' and end='frankfurt');
+
+ENAME
+ANAND
+RAMYA
+
+    iv) For all aircraft with cruisingrange over 1000 Kms. Find the name of the aircraft and the average salary of all pilots certified for this aircraft.
+
+SQL> select name,avgsal
+from(select a.aid,a.aname as name,avg(e.salary) as avgsal
+from aircraft a,certified c,employees e
+where a.aid=c.aid and c.eid=e.eid and crange>1000
+group by a.aid,a.aname);
+
+NAME
+AVGSAL
+BOEING10
+46500
+
+    v) Find the names of pilots certified for some Boeing aircraft.
+
+SQL> select distinct e.ename
+                       from employees e,certified c,aircraft a
+                       where a.aid=c.aid and c.eid=e.eid and a.aname like 'boeing%';
+
+
+
+ENAME
+ANAND
+ARUN
+ASHA
+
+    vi) Find the aids of all aircraft that can be used on routes from Bengaluru to New Delhi.
+ SQL> select a.aid
+from aircraft a
+where a.crange>(select min(dist)
+from flight
+where frm='bangalore' and end='delhi');
+
+AID
+685
+686
+687
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
